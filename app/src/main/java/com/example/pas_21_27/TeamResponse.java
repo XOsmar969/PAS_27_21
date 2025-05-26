@@ -1,4 +1,5 @@
 package com.example.pas_21_27;
+import com.example.pas_21_27.Team;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;

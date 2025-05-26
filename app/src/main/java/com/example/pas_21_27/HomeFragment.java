@@ -1,5 +1,6 @@
 package com.example.pas_21_27;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment {
     private TeamAdapter teamAdapter;
     private List<Team> teamList = new ArrayList<>();
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,

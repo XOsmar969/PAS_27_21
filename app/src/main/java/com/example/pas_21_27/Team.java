@@ -9,7 +9,7 @@ public class Team {
     @SerializedName("strTeam")
     private String strTeam;
 
-    @SerializedName("strTeamBadge")
+    @SerializedName("strBadge")
     private String strTeamBadge;
 
     public String getIdTeam() {

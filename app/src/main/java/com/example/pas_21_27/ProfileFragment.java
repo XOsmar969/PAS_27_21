@@ -28,7 +28,7 @@ public class ProfileFragment extends Fragment {
         tvKelas = view.findViewById(R.id.tvKelas);
 
         // Data diri statis (kamu bisa ubah isinya sesuai dirimu)
-        UserProfile user = new UserProfile("Nama Kamu", "123456", "XI RPL 2");
+        UserProfile user = new UserProfile("Osmar Ghalib Albani", "123456", "X PPLG 1");
 
         // Tampilkan ke TextView
         tvNama.setText("Nama: " + user.getNama());

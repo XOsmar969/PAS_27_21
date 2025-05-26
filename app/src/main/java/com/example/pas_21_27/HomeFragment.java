@@ -1,10 +1,12 @@
 package com.example.pas_21_27;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +24,7 @@ public class HomeFragment extends Fragment {
     private ProgressBar progressBar;
     private TeamAdapter teamAdapter;
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -50,13 +53,17 @@ public class HomeFragment extends Fragment {
                     List<Team> teams = response.body().getTeams();
                     teamAdapter = new TeamAdapter(teams);
                     rvTeams.setAdapter(teamAdapter);
+                } else {
+                    Log.e("API_RESPONSE", "Response not successful or body null");
+                    Toast.makeText(getContext(), "Gagal mengambil data: Response error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<TeamResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                // Tambahkan Toast atau Log jika mau
+                Log.e("API_FAILURE", t.toString());
+                Toast.makeText(getContext(), "Gagal mengambil data: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

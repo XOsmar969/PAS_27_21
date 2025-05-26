@@ -9,48 +9,41 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
 
-        // Load default fragment (Home)
-        loadFragment(new HomeFragment());
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment fragment = null;
-                        switch (item.getItemId()) {
-                            case R.id.nav_home:
-                                fragment = new HomeFragment();
-                                break;
-                            case R.id.nav_dashboard:
-                                fragment = new DashboardFragment();
-                                break;
-                            case R.id.nav_profile:
-                                fragment = new ProfileFragment();
-                                break;
-                        }
-                        return loadFragment(fragment);
-                    }
+                int id = item.getItemId();
+                if (id == R.id.nav_home) {
+                    selectedFragment = new HomeFragment();
+                } else if (id == R.id.nav_profile) {
+                    selectedFragment = new ProfileFragment();
+                } else if (id == R.id.nav_dashboard) {
+                    selectedFragment = new DashboardFragment();
                 }
-        );
-    }
 
-    private boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, fragment)
+                if (selectedFragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, selectedFragment)
+                            .commit();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Tampilkan fragment home default saat aplikasi mulai
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment())
                     .commit();
-            return true;
         }
-        return false;
     }
 }

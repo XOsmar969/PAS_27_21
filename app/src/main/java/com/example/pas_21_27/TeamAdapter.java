@@ -6,45 +6,50 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
-    private List<Team> teamList;
+public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder> {
+    private List<Team> teams;
 
-    public TeamAdapter(List<Team> teamList) {
-        this.teamList = teamList;
+    public TeamAdapter(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    @NonNull
+    @Override
+    public TeamViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_list, parent, false);
+        return new TeamViewHolder(view);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_team, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Team team = teamList.get(position);
-        holder.tvName.setText(team.getStrTeam());
-        Picasso.get().load(team.getStrTeamBadge()).into(holder.ivBadge);
+    public void onBindViewHolder(@NonNull TeamViewHolder holder, int position) {
+        Team team = teams.get(position);
+        holder.tvTeamName.setText(team.getStrTeam());
+        Glide.with(holder.itemView.getContext())
+                .load(team.getStrTeamBadge())
+                .into(holder.ivTeamBadge);
     }
 
     @Override
     public int getItemCount() {
-        return teamList.size();
+        return teams.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName;
-        ImageView ivBadge;
+    public static class TeamViewHolder extends RecyclerView.ViewHolder {
+        TextView tvTeamName;
+        ImageView ivTeamBadge;
 
-        public ViewHolder(View itemView) {
+        public TeamViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvTeamName);
-            ivBadge = itemView.findViewById(R.id.ivTeamBadge);
+            tvTeamName = itemView.findViewById(R.id.tvTeamName);
+            ivTeamBadge = itemView.findViewById(R.id.ivTeamBadge);
         }
     }
 }

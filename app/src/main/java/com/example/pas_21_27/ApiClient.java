@@ -4,8 +4,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL = "https://www.thesportsdb.com/api/v1/json/1/";
     private static Retrofit retrofit;
+    private static final String BASE_URL = "https://www.thesportsdb.com/api/v1/json/1/";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

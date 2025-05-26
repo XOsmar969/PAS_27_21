@@ -1,16 +1,10 @@
 package com.example.pas_21_27;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-import androidx.fragment.app.Fragment;
-
-public class DashboardFragment extends Fragment {
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        return view;
-    }
+public interface ApiService {
+    @GET("eventsseason.php")
+    Call<EventResponse> getEvents(@Query("id") String leagueId, @Query("s") String season);
 }

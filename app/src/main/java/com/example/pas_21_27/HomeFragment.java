@@ -1,3 +1,22 @@
+package com.example.pas_21_27;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HomeFragment extends Fragment {
 
     private RecyclerView rvTeams;
@@ -13,9 +32,6 @@ public class HomeFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
 
         rvTeams.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        teamAdapter = new TeamAdapter(new ArrayList<>()); // Pasang adapter kosong dulu
-        rvTeams.setAdapter(teamAdapter);
 
         fetchData();
 
@@ -33,8 +49,9 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<TeamResponse> call, Response<TeamResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
-                    teamAdapter.setTeams(response.body().getTeams());
-                    teamAdapter.notifyDataSetChanged();
+                    List<Team> teams = response.body().getTeams();
+                    teamAdapter = new TeamAdapter(teams);
+                    rvTeams.setAdapter(teamAdapter);
                 } else {
                     Toast.makeText(getContext(), "Gagal mengambil data: Response error", Toast.LENGTH_SHORT).show();
                 }

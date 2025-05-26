@@ -1,19 +1,26 @@
 package com.example.pas_21_27;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Team {
-    private String name;
-    private String logoUrl;
+    @SerializedName("idTeam")
+    private String idTeam;
 
-    public Team(String name, String logoUrl) {
-        this.name = name;
-        this.logoUrl = logoUrl;
+    @SerializedName("strTeam")
+    private String strTeam;
+
+    @SerializedName("strTeamBadge")
+    private String strTeamBadge;
+
+    public String getIdTeam() {
+        return idTeam;
     }
 
-    public String getName() {
-        return name;
+    public String getStrTeam() {
+        return strTeam;
     }
 
-    public String getLogoUrl() {
-        return logoUrl;
+    public String getStrTeamBadge() {
+        return strTeamBadge;
     }
 }

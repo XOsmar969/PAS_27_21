@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:padding="12dp"
     android:orientation="horizontal"
-    android:padding="8dp"
-    android:gravity="center_vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/ivLogo"
+        android:id="@+id/ivTeamBadge"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:scaleType="fitCenter"
-        />
+        android:contentDescription="Team Badge"/>
 
     <TextView
-        android:id="@+id/tvName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:id="@+id/tvTeamName"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="12dp"
         android:textSize="18sp"
-        android:textColor="@android:color/black"
-        android:layout_weight="1"
-        android:text="Team Name" />
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -1,53 +1,47 @@
 package com.example.pas_21_27;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private TeamAdapter teamAdapter;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_home);
+        setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        teamAdapter = new TeamAdapter(this, null);
-        recyclerView.setAdapter(teamAdapter);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<TeamResponse> call = apiService.getTeams("Soccer", "Spain");
+        // Load HomeFragment awal
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, new HomeFragment())
+                .commit();
 
-        call.enqueue(new Callback<TeamResponse>() {
-            @Override
-            public void onResponse(Call<TeamResponse> call, Response<TeamResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Team> teams = response.body().getTeams();
-                    teamAdapter.setTeams(teams);
-                } else {
-                    Toast.makeText(MainActivity.this, "Gagal mengambil data", Toast.LENGTH_SHORT).show();
-                }
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment fragment = null;
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                fragment = new HomeFragment();
+            } else if (itemId == R.id.nav_dashboard) {
+                fragment = new DashboardFragment();
+            } else if (itemId == R.id.nav_profile) {
+                fragment = new ProfileFragment();
             }
 
-            @Override
-            public void onFailure(Call<TeamResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Terjadi kesalahan: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("MainActivity", "onFailure: ", t);
+            if (fragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, fragment)
+                        .commit();
+                return true;
             }
+            return false;
         });
     }
 }

@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 public class ProfileFragment extends Fragment {
 
     private TextView tvNama, tvNis, tvKelas;
-
+    private TextView tvNama2, tvNis2, tvKelas2;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -22,19 +22,31 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Inisialisasi TextView
+
         tvNama = view.findViewById(R.id.tvNama);
         tvNis = view.findViewById(R.id.tvNis);
         tvKelas = view.findViewById(R.id.tvKelas);
 
-        // Data diri statis (kamu bisa ubah isinya sesuai dirimu)
-        UserProfile user = new UserProfile("Osmar Ghalib Albani", "123456", "X PPLG 1");
+        tvNama2 = view.findViewById(R.id.tvNama2);
+        tvNis2 = view.findViewById(R.id.tvNis2);
+        tvKelas2 = view.findViewById(R.id.tvKelas2);
 
-        // Tampilkan ke TextView
-        tvNama.setText("Nama: " + user.getNama());
-        tvNis.setText("NIS: " + user.getNis());
-        tvKelas.setText("Kelas: " + user.getKelas());
+
+        UserProfile user1 = new UserProfile("Osmar Ghalib Albani", "123456", "X PPLG 1");
+
+
+        UserProfile user2 = new UserProfile("L", "789012", "X PPLG 1");
+
+
+        tvNama.setText("Nama: " + user1.getNama());
+        tvNis.setText("NIS: " + user1.getNis());
+        tvKelas.setText("Kelas: " + user1.getKelas());
+
+        tvNama2.setText("Nama: " + user2.getNama());
+        tvNis2.setText("NIS: " + user2.getNis());
+        tvKelas2.setText("Kelas: " + user2.getKelas());
 
         return view;
     }
 }
+

@@ -9,7 +9,7 @@
         android:id="@+id/tvNama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nama:Osmar Ghalib Albani "
+        android:text="Nama:"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
@@ -17,7 +17,7 @@
         android:id="@+id/tvNis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NIS:13131 "
+        android:text="NIS: "
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
 
@@ -25,7 +25,29 @@
         android:id="@+id/tvKelas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kelas:X PPLG 1 "
+        android:text="Kelas:"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/tvNama2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama:"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvNis2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NIS: "
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvKelas2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kelas:"
         android:textSize="18sp"/>
 
 </LinearLayout>

@@ -4,13 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,48 +21,48 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView rvTeams;
-    private ProgressBar progressBar;
+    private RecyclerView recyclerView;
     private TeamAdapter teamAdapter;
+    private List<Team> teamList = new ArrayList<>();
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        rvTeams = view.findViewById(R.id.rvTeams);
-        progressBar = view.findViewById(R.id.progressBar);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        rvTeams.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Inisialisasi adapter dengan context dan list kosong dulu
+        teamAdapter = new TeamAdapter(getContext(), teamList);
+        recyclerView.setAdapter(teamAdapter);
 
-        fetchData();
+        loadTeams();
 
         return view;
     }
 
-    private void fetchData() {
-        progressBar.setVisibility(View.VISIBLE);
-
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
-        Call<TeamResponse> call = apiService.getTeams("Spanish La Liga");
+    private void loadTeams() {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<TeamResponse> call = apiService.getTeams("Soccer", "Spain");
 
         call.enqueue(new Callback<TeamResponse>() {
             @Override
             public void onResponse(Call<TeamResponse> call, Response<TeamResponse> response) {
-                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Team> teams = response.body().getTeams();
-                    teamAdapter = new TeamAdapter(teams);
-                    rvTeams.setAdapter(teamAdapter);
+                    teamList.clear();
+                    teamList.addAll(response.body().getTeams());
+                    teamAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getContext(), "Gagal mengambil data: Response error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Response not successful or body null", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<TeamResponse> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Gagal mengambil data: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

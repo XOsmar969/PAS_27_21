@@ -12,6 +12,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,15 +38,17 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
+    // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+    // Retrofit for networking
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    implementation("com.squareup.picasso:picasso:2.71828")
-
-    implementation("com.github.bumptech.glide:glide:4.15.1")
+    // Image loading libraries
+    implementation("com.squareup.picasso:picasso:2.71828") // optional, kalau mau pakai Picasso
+    implementation("com.github.bumptech.glide:glide:4.15.1") // Glide (lebih direkomendasikan)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 }

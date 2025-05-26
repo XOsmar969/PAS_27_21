@@ -6,24 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder> {
 
     private Context context;
-    private List<Team> teams;
+    private List<Team> teamList;
 
-    public TeamAdapter(Context context, List<Team> teams) {
+    public TeamAdapter(Context context, List<Team> teamList) {
         this.context = context;
-        this.teams = teams;
-    }
-
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-        notifyDataSetChanged();
+        this.teamList = teamList;
     }
 
     @NonNull
@@ -35,8 +33,10 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TeamViewHolder holder, int position) {
-        Team team = teams.get(position);
+        Team team = teamList.get(position);
         holder.teamName.setText(team.getStrTeam());
+
+        // Load logo gambar pakai Glide
         Glide.with(context)
                 .load(team.getStrTeamBadge())
                 .into(holder.teamBadge);
@@ -44,17 +44,18 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 
     @Override
     public int getItemCount() {
-        return (teams != null) ? teams.size() : 0;
+        return teamList.size();
     }
 
-    public static class TeamViewHolder extends RecyclerView.ViewHolder {
-        TextView teamName;
+    static class TeamViewHolder extends RecyclerView.ViewHolder {
+
         ImageView teamBadge;
+        TextView teamName;
 
         public TeamViewHolder(@NonNull View itemView) {
             super(itemView);
-            teamName = itemView.findViewById(R.id.tvTeamName);
-            teamBadge = itemView.findViewById(R.id.ivTeamBadge);
+            teamBadge = itemView.findViewById(R.id.imgTeamBadge);
+            teamName = itemView.findViewById(R.id.txtTeamName);
         }
     }
 }
